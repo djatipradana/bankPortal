@@ -14,10 +14,11 @@ var contractInstance = kycContract.at(contractAddress); */
 const contractInstance = new web3.eth.Contract(abi, contractAddress);
 
 //  account to make all transactions
-var current_bankPriveKey = localStorage.getItem("bankPrivKey");
-var current_bankAddress = localStorage.getItem("bankAddress");
-var current_bank_name_l = localStorage.getItem("bank_name_l");
-var current_user_name_d = localStorage.getItem("user_name_d");
+var current_bankPriveKey;
+var current_bankAddress;
+var current_bank_name_l;
+var current_user_name_d;
+var count = 0;
 
 var starsTotal = 5;
 
@@ -43,36 +44,69 @@ var element = [
 //var user_name = localStorage.user_name_d;
 
 window.onload = function() { 
+    current_bankPriveKey = localStorage.getItem("bankPrivKey");
+    current_bankAddress = localStorage.getItem("bankAddress");
+    current_bank_name_l = localStorage.getItem("bank_name_l");
+    current_user_name_d = localStorage.getItem("user_name_d");
+
     fillForm();
 }
 
 
 web3.eth.defaultAccount = current_bankAddress;
-let privateKey1 = new ethereumjs.Buffer.Buffer(current_bankPriveKey, 'hex');
+let privateKey1 = new ethereumjs.Buffer.Buffer(ownerPrivateKey, 'hex');
 
 function sendSign(myData,gasLimit){
-    web3.eth.getTransactionCount(current_bankAddress, (err, txCount) => {
+    web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
     // Build the transaction
-      const txObject = {
+    const txObject = {
         nonce:    web3.utils.toHex(txCount),
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(gasLimit),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
         data: myData  
-      }
-        // Sign the transaction
-        //const tx = new Tx(txObject);
-        const tx = new ethereumjs.Tx(txObject);
-        tx.sign(privateKey1);
+    }
+    // Sign the transaction
+    //const tx = new Tx(txObject);
+    const tx = new ethereumjs.Tx(txObject);
+    tx.sign(privateKey1);
 
-        const serializedTx = tx.serialize();
-        const raw = '0x' + serializedTx.toString('hex');
+    const serializedTx = tx.serialize();
+    const raw = '0x' + serializedTx.toString('hex');
 
-        // Broadcast the transaction
-        const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
-            console.log(tx)
-        });
+    // Broadcast the transaction
+     /*const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
+        console.log(tx)
+    }); */
+
+    const transaction = web3.eth.sendSignedTransaction(raw)
+        .on('transactionHash', hash => {
+            console.log('TX Hash', hash)
+            console.log('Transaction was send, please wait ... ')
+            console.log("https://ropsten.etherscan.io/tx/"+ hash);
+        })
+        .then(receipt => {
+            console.log('Mined', receipt)
+            console.log("Your transaction was mined...")
+            //setTimeout(function () { location.reload(1); }, 1000);
+            console.log(receipt.status)
+            if(receipt.status == true ) {
+                console.log('Transaction Success')
+                count++;
+                //alert('Transaction Success')
+            }
+            else if(receipt.status == false) {
+                console.log('Transaction Failed')
+            }
+        })
+        .catch( err => {
+            console.log('Error', err)
+            //alert('Transaction Failed')
+        })
+        .finally(() => {
+            console.log('Extra Code After Everything')
+        })
     });
 }
 
@@ -128,22 +162,22 @@ async function onClickDelete() {
         from: current_bankAddress,
         gas: 4700000
     }); */
-
-    let accDelete = await contractInstance.methods.removeAccountCust(current_user_name_d).encodeABI();
-    sendSign(accDelete,50000);
-    let custDelete = await contractInstance.methods.removeCust(current_user_name_d).encodeABI();
-    sendSign(custDelete,50000);
-    
-    if ((accDelete && custDelete) == 0) {
-        if (confirm("Are you sure to delete the KYC profile of " + current_user_name_d + " ?") == true) {
+    if (confirm("Are you sure to delete the KYC profile of " + current_user_name_d + " ?") == true) {
+        let accDelete = await contractInstance.methods.removeAccountCust(current_user_name_d).encodeABI();
+        sendSign(accDelete,100000);
+        let custDelete = await contractInstance.methods.removeCust(current_user_name_d).encodeABI();
+        sendSign(custDelete,100000);
+        
+        if (count == 2) {
+            count = 0;
             alert("Customer profile successfully deleted.");
             localStorage.removeItem("user_name_d");
-            window.location = '../bankHomePage.html';
+            document.location.assign('../bankHomePage.html');
+            return false;
+        } else {
+            alert("Customer profile hasn't been successfully deleted.");
+            return false;
         }
-        return false;
-    } else {
-        alert("Customer profile hasn't been successfully deleted.");
-        return false;
     }
 
 }

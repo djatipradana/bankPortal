@@ -49,31 +49,58 @@ window.onload = function() {
 
 
 web3.eth.defaultAccount = current_bankAddress;
-let privateKey1 = new ethereumjs.Buffer.Buffer(current_bankPriveKey, 'hex');
+let privateKey1 = new ethereumjs.Buffer.Buffer(ownerPrivateKey, 'hex');
 
 function sendSign(myData,gasLimit){
-    web3.eth.getTransactionCount(current_bankAddress, (err, txCount) => {
+    web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
     // Build the transaction
-      const txObject = {
+    const txObject = {
         nonce:    web3.utils.toHex(txCount),
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(gasLimit),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
         data: myData  
-      }
-        // Sign the transaction
-        //const tx = new Tx(txObject);
-        const tx = new ethereumjs.Tx(txObject);
-        tx.sign(privateKey1);
+    }
+    // Sign the transaction
+    //const tx = new Tx(txObject);
+    const tx = new ethereumjs.Tx(txObject);
+    tx.sign(privateKey1);
 
-        const serializedTx = tx.serialize();
-        const raw = '0x' + serializedTx.toString('hex');
+    const serializedTx = tx.serialize();
+    const raw = '0x' + serializedTx.toString('hex');
 
-        // Broadcast the transaction
-        const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
-            console.log(tx)
-        });
+    // Broadcast the transaction
+     /*const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
+        console.log(tx)
+    }); */
+
+    const transaction = web3.eth.sendSignedTransaction(raw)
+        .on('transactionHash', hash => {
+            console.log('TX Hash', hash)
+            console.log('Transaction was send, please wait ... ')
+            console.log("https://ropsten.etherscan.io/tx/"+ hash);
+        })
+        .then(receipt => {
+            console.log('Mined', receipt)
+            console.log("Your transaction was mined...")
+            //setTimeout(function () { location.reload(1); }, 1000);
+            console.log(receipt.status)
+            if(receipt.status == true ) {
+                console.log('Transaction Success')
+                //alert('Transaction Success')
+            }
+            else if(receipt.status == false) {
+                console.log('Transaction Failed')
+            }
+        })
+        .catch( err => {
+            console.log('Error', err)
+            //alert('Transaction Failed')
+        })
+        .finally(() => {
+            console.log('Extra Code After Everything')
+        })
     });
 }
 
@@ -173,17 +200,74 @@ async function onClickAccept() {
     }); */
 
     let verified = await contractInstance.methods.setCustVerified(current_user_name_v).encodeABI();
-    sendSign(verified,20000);
+    //sendSign(verified,20000);
 
-    if (verified == 0) {
+    web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
+    // Build the transaction
+    const txObject = {
+        nonce:    web3.utils.toHex(txCount),
+        to:       contractAddress,
+        value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
+        gasLimit: web3.utils.toHex(20000),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+        data: verified  
+    }
+    // Sign the transaction
+    //const tx = new Tx(txObject);
+    const tx = new ethereumjs.Tx(txObject);
+    tx.sign(privateKey1);
+
+    const serializedTx = tx.serialize();
+    const raw = '0x' + serializedTx.toString('hex');
+
+    // Broadcast the transaction
+     /*const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
+        console.log(tx)
+    }); */
+
+    const transaction = web3.eth.sendSignedTransaction(raw)
+        .on('transactionHash', hash => {
+            console.log('TX Hash', hash)
+            console.log('Transaction was send, please wait ... ')
+            console.log("https://ropsten.etherscan.io/tx/"+ hash);
+        })
+        .then(receipt => {
+            console.log('Mined', receipt)
+            console.log("Your transaction was mined...")
+            //setTimeout(function () { location.reload(1); }, 1000);
+            console.log(receipt.status)
+            if(receipt.status == true ) {
+                console.log('Transaction Success')
+                alert("Customer profile successfully verified.");
+                localStorage.removeItem("user_name_v");
+                document.location.assign('../bankHomePage.html');
+                return false;
+                //alert('Transaction Success')
+            }
+            else if(receipt.status == false) {
+                console.log('Transaction Failed')
+                alert("Customer profile hasn't been successfully verified.");
+                return false;
+            }
+        })
+        .catch( err => {
+            console.log('Error', err)
+            //alert('Transaction Failed')
+        })
+        .finally(() => {
+            console.log('Extra Code After Everything')
+        })
+    });
+
+    /*if (verified == 0) {
         alert("Customer profile successfully verified.");
         localStorage.removeItem("user_name_v");
-        window.location = '../bankHomePage.html';
+        document.location.assign('../bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been successfully verified.");
         return false;
-    }
+    }   */
 }
 
 
@@ -194,15 +278,72 @@ async function onClickReject() {
     }); */
 
     let rejected = await contractInstance.methods.setCustRejected(current_user_name_v).encodeABI();
-    sendSign(rejected,20000);
+    //sendSign(rejected,20000);
 
-    if (rejected == 0) {
+    web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
+    // Build the transaction
+    const txObject = {
+        nonce:    web3.utils.toHex(txCount),
+        to:       contractAddress,
+        value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
+        gasLimit: web3.utils.toHex(20000),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+        data: rejected  
+    }
+    // Sign the transaction
+    //const tx = new Tx(txObject);
+    const tx = new ethereumjs.Tx(txObject);
+    tx.sign(privateKey1);
+
+    const serializedTx = tx.serialize();
+    const raw = '0x' + serializedTx.toString('hex');
+
+    // Broadcast the transaction
+     /*const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
+        console.log(tx)
+    }); */
+
+    const transaction = web3.eth.sendSignedTransaction(raw)
+        .on('transactionHash', hash => {
+            console.log('TX Hash', hash)
+            console.log('Transaction was send, please wait ... ')
+            console.log("https://ropsten.etherscan.io/tx/"+ hash);
+        })
+        .then(receipt => {
+            console.log('Mined', receipt)
+            console.log("Your transaction was mined...")
+            //setTimeout(function () { location.reload(1); }, 1000);
+            console.log(receipt.status)
+            if(receipt.status == true ) {
+                console.log('Transaction Success')
+                alert("Customer profile successfully rejected.");
+                localStorage.removeItem("user_name_v");
+                document.location.assign('../bankHomePage.html');
+                return false;
+                //alert('Transaction Success')
+            }
+            else if(receipt.status == false) {
+                console.log('Transaction Failed')
+                alert("Customer profile hasn't been successfully rejected.");
+                return false;
+            }
+        })
+        .catch( err => {
+            console.log('Error', err)
+            //alert('Transaction Failed')
+        })
+        .finally(() => {
+            console.log('Extra Code After Everything')
+        })
+    });
+
+    /*if (rejected == 0) {
         alert("Customer profile successfully rejected.");
         localStorage.removeItem("user_name_v");
-        window.location = '../bankHomePage.html';
+        document.location.assign('../bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been successfully rejected.");
         return false;
-    }
+    }   */
 }

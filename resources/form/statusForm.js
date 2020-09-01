@@ -15,15 +15,19 @@ var contractInstance = kycContract.at(contractAddress); */
 const contractInstance = new web3.eth.Contract(abi, contractAddress);
 
 //  account to make all transactions
-var current_bankPriveKey = localStorage.getItem("bankPrivKey");
-var current_bankAddress = localStorage.getItem("bankAddress");
-var current_bank_name_l = localStorage.getItem("bank_name_l");
+var current_bankPriveKey;
+var current_bankAddress;
+var current_bank_name_l;
 
 //var current_account = localStorage.bank_eth_account;
 //var user_name = localStorage.user_name_m;
 
 window.onload = function() {
     table();
+
+    current_bankPriveKey = localStorage.getItem("bankPrivKey");
+    current_bankAddress = localStorage.getItem("bankAddress");
+    current_bank_name_l = localStorage.getItem("bank_name_l");
 
     //document.getElementById("uname").innerHTML = current_username;
     //document.getElementById("bank_name").innerHTML = current_bankName;
@@ -35,7 +39,7 @@ async function table() {
 
     if (filling[0] == "null" || filling[0] == "") {
         alert("Customer data is empty.");
-        window.location = '../bankHomePage.html';
+        document.location.assign('../bankHomePage.html');
         return false;
     } else {
         //let userReq = [];

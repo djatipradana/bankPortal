@@ -15,14 +15,20 @@ var contractInstance = kycContract.at(contractAddress); */
 const contractInstance = new web3.eth.Contract(abi, contractAddress);
 
 //var currentEth = localStorage.bank_eth_account;
-var current_bankPriveKey = localStorage.getItem("bankPrivKey");
-var current_bankAddress = localStorage.getItem("bankAddress");
-var current_bank_name_l = localStorage.getItem("bank_name_l");
+
+var current_bankPriveKey;
+var current_bankAddress;
+var current_bank_name_l;
 
 var starsTotal = 5;
 
 window.onload = function() {
+    current_bankPriveKey = localStorage.getItem("bankPrivKey");
+    current_bankAddress = localStorage.getItem("bankAddress");
+    current_bank_name_l = localStorage.getItem("bank_name_l");
+
     fillDetails();
+
     /*
     const toStar = parseFloat(240)/100;
     // Get percentage
@@ -37,31 +43,58 @@ window.onload = function() {
 }
 
 web3.eth.defaultAccount = current_bankAddress;
-let privateKey1 = new ethereumjs.Buffer.Buffer(current_bankPriveKey, 'hex');
+let privateKey1 = new ethereumjs.Buffer.Buffer(ownerPrivateKey, 'hex');
 
 function sendSign(myData,gasLimit){
-    web3.eth.getTransactionCount(current_bankAddress, (err, txCount) => {
+    web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
     // Build the transaction
-      const txObject = {
+    const txObject = {
         nonce:    web3.utils.toHex(txCount),
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(gasLimit),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('6', 'gwei')),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
         data: myData  
-      }
-        // Sign the transaction
-        //const tx = new Tx(txObject);
-        const tx = new ethereumjs.Tx(txObject);
-        tx.sign(privateKey1);
+    }
+    // Sign the transaction
+    //const tx = new Tx(txObject);
+    const tx = new ethereumjs.Tx(txObject);
+    tx.sign(privateKey1);
 
-        const serializedTx = tx.serialize();
-        const raw = '0x' + serializedTx.toString('hex');
+    const serializedTx = tx.serialize();
+    const raw = '0x' + serializedTx.toString('hex');
 
-        // Broadcast the transaction
-        const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
-            console.log(tx)
-        });
+    // Broadcast the transaction
+     /*const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
+        console.log(tx)
+    }); */
+
+    const transaction = web3.eth.sendSignedTransaction(raw)
+        .on('transactionHash', hash => {
+            console.log('TX Hash', hash)
+            console.log('Transaction was send, please wait ... ')
+            console.log("https://ropsten.etherscan.io/tx/"+ hash);
+        })
+        .then(receipt => {
+            console.log('Mined', receipt)
+            console.log("Your transaction was mined...")
+            //setTimeout(function () { location.reload(1); }, 1000);
+            console.log(receipt.status)
+            if(receipt.status == true ) {
+                console.log('Transaction Success')
+                //alert('Transaction Success')
+            }
+            else if(receipt.status == false) {
+                console.log('Transaction Failed')
+            }
+        })
+        .catch( err => {
+            console.log('Error', err)
+            //alert('Transaction Failed')
+        })
+        .finally(() => {
+            console.log('Extra Code After Everything')
+        })
     });
 }
 
@@ -94,14 +127,14 @@ async function clickVerifyKYC() {
     let getCustForVerify = await contractInstance.methods.getCustForVerify(user_name_v, current_bank_name_l).call();
     if (getCustForVerify == 0) {
         localStorage.setItem("user_name_v",user_name_v);
-        window.location = './form/verifyForm.html';
+        document.location.assign('./form/verifyForm.html');
     } else if (getCustForVerify == 2) {
         alert("Customer profile has been verified.");
-        //window.location = './bankHomePage.html';
+        //document.location.assign('./bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been registered yet.");
-        //window.location = './bankHomePage.html';
+        //document.location.assign('./bankHomePage.html');
         return false;
     }
 }
@@ -114,7 +147,7 @@ async function clickDeleteKYC() {
         window.location = './form/deleteForm.html';
     } else {
         alert("Customer profile hasn't been registered yet.");
-        //window.location = './bankHomePage.html';
+        //document.location.assign('./bankHomePage.html');
         return false;
     }
 
@@ -133,17 +166,73 @@ async function increaseRating() {
         }); */
 
         let increaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, true).encodeABI();
-        sendSign(increaseRatingCust,200000);
+        //sendSign(increaseRatingCust,100000);
+        
+        web3.eth.getTransactionCount(contractAddress, (err, txCount) => {
+        // Build the transaction
+        const txObject = {
+            nonce:    web3.utils.toHex(txCount),
+            to:       contractAddress,
+            value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
+            gasLimit: web3.utils.toHex(100000),
+            gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+            data: increaseRatingCust  
+        }
+        // Sign the transaction
+        //const tx = new Tx(txObject);
+        const tx = new ethereumjs.Tx(txObject);
+        tx.sign(privateKey1);
 
-        if (increaseRatingCust == 0) {
+        const serializedTx = tx.serialize();
+        const raw = '0x' + serializedTx.toString('hex');
+
+        // Broadcast the transaction
+         /*const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
+            console.log(tx)
+        }); */
+        const transaction = web3.eth.sendSignedTransaction(raw)
+            .on('transactionHash', hash => {
+                console.log('TX Hash', hash)
+                console.log('Transaction was send, please wait ... ')
+                console.log("https://ropsten.etherscan.io/tx/"+ hash);
+            })
+            .then(receipt => {
+                console.log('Mined', receipt)
+                console.log("Your transaction was mined...")
+                //setTimeout(function () { location.reload(1); }, 1000);
+                console.log(receipt.status)
+                if(receipt.status == true ) {
+                    console.log('Transaction Success')
+                    alert("Customer rating successfully upgraded.");
+                    //document.location.assign('./bankHomePage.html');
+                    return false;
+                    //alert('Transaction Success')
+                }
+                else if(receipt.status == false) {
+                    console.log('Transaction Failed')
+                    alert("Customer rating hasn't been successfully upgraded.");
+                    //document.location.assign('./bankHomePage.html');
+                    return false;
+                }
+            })
+            .catch( err => {
+                console.log('Error', err)
+                //alert('Transaction Failed')
+            })
+            .finally(() => {
+                console.log('Extra Code After Everything')
+            })
+        });
+
+        /*if (increaseRatingCust == 0) {
             alert("Customer rating successfully upgraded.");
-            //window.location = './bankHomePage.html';
+            //document.location.assign('./bankHomePage.html');
             return false;
         } else {
             alert("Customer rating hasn't been successfully upgraded.");
-            //window.location = './bankHomePage.html';
+            //document.location.assign('./bankHomePage.html');
             return false;
-        }
+        }   */
     }
 }
 
@@ -159,17 +248,73 @@ async function decreaseRating() {
         }); */
 
         let decreaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, false).encodeABI();
-        sendSign(decreaseRatingCust,200000);
+        //sendSign(decreaseRatingCust,200000);
 
-        if (decreaseRatingCust == 1) {
+        web3.eth.getTransactionCount(contractAddress, (err, txCount) => {
+        // Build the transaction
+        const txObject = {
+            nonce:    web3.utils.toHex(txCount),
+            to:       contractAddress,
+            value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
+            gasLimit: web3.utils.toHex(100000),
+            gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+            data: decreaseRatingCust  
+        }
+        // Sign the transaction
+        //const tx = new Tx(txObject);
+        const tx = new ethereumjs.Tx(txObject);
+        tx.sign(privateKey1);
+
+        const serializedTx = tx.serialize();
+        const raw = '0x' + serializedTx.toString('hex');
+
+        // Broadcast the transaction
+         /*const transaction = web3.eth.sendSignedTransaction(raw, (err, tx) => {
+            console.log(tx)
+        }); */
+        const transaction = web3.eth.sendSignedTransaction(raw)
+            .on('transactionHash', hash => {
+                console.log('TX Hash', hash)
+                console.log('Transaction was send, please wait ... ')
+                console.log("https://ropsten.etherscan.io/tx/"+ hash);
+            })
+            .then(receipt => {
+                console.log('Mined', receipt)
+                console.log("Your transaction was mined...")
+                //setTimeout(function () { location.reload(1); }, 1000);
+                console.log(receipt.status)
+                if(receipt.status == true ) {
+                    console.log('Transaction Success')
+                    alert("Customer rating successfully downgraded.");
+                    //document.location.assign('./bankHomePage.html');
+                    return false;
+                    //alert('Transaction Success')
+                }
+                else if(receipt.status == false) {
+                    console.log('Transaction Failed')
+                    alert("Customer rating hasn't been successfully downgraded.");
+                    //window.location = './bankHomePage.html';
+                    return false;
+                }
+            })
+            .catch( err => {
+                console.log('Error', err)
+                //alert('Transaction Failed')
+            })
+            .finally(() => {
+                console.log('Extra Code After Everything')
+            })
+        });
+
+        /*if (decreaseRatingCust == 1) {
             alert("Customer rating successfully downgraded.");
-            //window.location = './bankHomePage.html';
+            //document.location.assign('./bankHomePage.html');
             return false;
         } else {
             alert("Customer rating hasn't been successfully downgraded.");
             //window.location = './bankHomePage.html';
             return false;
-        } 
+        }   */ 
     }
 }
 
@@ -179,7 +324,7 @@ function logout(){
     localStorage.removeItem("bank_name_l");
     localStorage.removeItem("user_name_v");
     localStorage.removeItem("user_name_d");
-    window.location.href = "../index.html";
+    document.location.assign("../index.html");
 }
 
 
