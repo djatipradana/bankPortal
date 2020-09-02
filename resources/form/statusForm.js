@@ -1,6 +1,6 @@
 //  Web3 intializer
 //  ABI definition, Binary Data and contract Address in contractDetails.js
-const Web3 = require('web3');
+//const Web3 = require('web3');
 //const Tx = require('ethereumjs-tx'); 
 
 const web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/6a68c430ab2e43adb0762c4cfa9bbb42"));
