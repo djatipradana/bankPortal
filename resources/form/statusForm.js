@@ -37,7 +37,7 @@ window.onload = function() {
 async function table() {
     let filling = await contractInstance.methods.fillTable(current_bank_name_l).call(); 
     console.log(filling);
-    if (filling[0] == "null" || filling[0] == "") {
+    if (filling.length < 1) {
         alert("Customer data is empty.");
         document.location.assign('../bankHomePage.html');
         return false;
