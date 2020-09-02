@@ -18,7 +18,7 @@ var current_bankPriveKey;
 var current_bankAddress;
 var current_bank_name_l;
 var current_user_name_d;
-var count = 0;
+//var count = 0;
 
 var starsTotal = 5;
 
@@ -64,7 +64,7 @@ function sendSign(myData,gasLimit){
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(gasLimit),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('12', 'gwei')),
         data: myData  
     }
     // Sign the transaction
@@ -91,13 +91,19 @@ function sendSign(myData,gasLimit){
             console.log("Your transaction was mined...")
             //setTimeout(function () { location.reload(1); }, 1000);
             console.log(receipt.status)
+            //count++;
             if(receipt.status == true ) {
                 console.log('Transaction Success')
-                count++;
+                alert("Customer profile successfully deleted.");
+                localStorage.removeItem("user_name_d");
+                document.location.assign('../bankHomePage.html');
+                return false;
                 //alert('Transaction Success')
             }
             else if(receipt.status == false) {
                 console.log('Transaction Failed')
+                alert("Customer profile hasn't been successfully deleted.");
+                return false;
             }
         })
         .catch( err => {
@@ -163,12 +169,12 @@ async function onClickDelete() {
         gas: 4700000
     }); */
     if (confirm("Are you sure to delete the KYC profile of " + current_user_name_d + " ?") == true) {
-        let accDelete = await contractInstance.methods.removeAccountCust(current_user_name_d).encodeABI();
-        sendSign(accDelete,100000);
+        /*let accDelete = await contractInstance.methods.removeAccountCust(current_user_name_d).encodeABI();
+        sendSign(accDelete,100000); */
         let custDelete = await contractInstance.methods.removeCust(current_user_name_d).encodeABI();
-        sendSign(custDelete,100000);
+        sendSign(custDelete,200000);
         
-        if (count == 2) {
+        /*if (count == 2) {
             count = 0;
             alert("Customer profile successfully deleted.");
             localStorage.removeItem("user_name_d");
@@ -177,7 +183,7 @@ async function onClickDelete() {
         } else {
             alert("Customer profile hasn't been successfully deleted.");
             return false;
-        }
+        }   */
     }
 
 }

@@ -59,7 +59,7 @@ function sendSign(myData,gasLimit){
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(gasLimit),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('12', 'gwei')),
         data: myData  
     }
     // Sign the transaction
@@ -209,7 +209,7 @@ async function onClickAccept() {
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(20000),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('12', 'gwei')),
         data: verified  
     }
     // Sign the transaction
@@ -287,7 +287,7 @@ async function onClickReject() {
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(20000),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('9', 'gwei')),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('12', 'gwei')),
         data: rejected  
     }
     // Sign the transaction
