@@ -15,10 +15,10 @@ var contractInstance = kycContract.at(contractAddress); */
 const contractInstance = new web3.eth.Contract(abi, contractAddress);
 
 //  account to make all transactions
-var current_bankPriveKey = localStorage.getItem("bankPrivKey");
-var current_bankAddress = localStorage.getItem("bankAddress");
-var current_bank_name_l = localStorage.getItem("bank_name_l");
-var current_user_name_v = localStorage.getItem("user_name_v");
+var current_bankPriveKey;
+var current_bankAddress;
+var current_bank_name_l;
+var current_user_name_v;
 
 var starsTotal = 5;
 
@@ -44,6 +44,11 @@ var element = [
 //var user_name = localStorage.user_name_v;
 
 window.onload = function() { 
+    current_bankPriveKey = localStorage.getItem("bankPrivKey");
+    current_bankAddress = localStorage.getItem("bankAddress");
+    current_bank_name_l = localStorage.getItem("bank_name_l");
+    current_user_name_v = localStorage.getItem("user_name_v");
+
     fillForm();
 }
 

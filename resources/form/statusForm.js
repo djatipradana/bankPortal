@@ -23,11 +23,11 @@ var current_bank_name_l;
 //var user_name = localStorage.user_name_m;
 
 window.onload = function() {
-    table();
-
     current_bankPriveKey = localStorage.getItem("bankPrivKey");
     current_bankAddress = localStorage.getItem("bankAddress");
     current_bank_name_l = localStorage.getItem("bank_name_l");
+
+    table();
 
     //document.getElementById("uname").innerHTML = current_username;
     //document.getElementById("bank_name").innerHTML = current_bankName;
