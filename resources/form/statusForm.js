@@ -38,7 +38,7 @@ async function table() {
     let filling = await contractInstance.methods.fillTable(current_bank_name_l).call(); 
     console.log(filling);
     if (filling.length < 1) {
-        alert("Customer data is empty.");
+        alert("Customer data doesn't exist.");
         document.location.assign('../bankHomePage.html');
         return false;
     } else {
