@@ -233,7 +233,7 @@ async function onClickAccept() {
     const transaction = web3.eth.sendSignedTransaction(raw)
         .on('transactionHash', hash => {
             console.log('TX Hash', hash)
-            console.log('Transaction was send, please wait ... ')
+            alert('Transaction was send, please wait ... ')
             console.log("https://ropsten.etherscan.io/tx/"+ hash);
         })
         .then(receipt => {

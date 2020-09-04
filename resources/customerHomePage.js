@@ -130,5 +130,5 @@ function logout(){
     localStorage.removeItem("accountAddress");
     localStorage.removeItem("username");
     localStorage.removeItem("bankName");
-    document.location.assign("../index.html");
+    document.location.assign("../indexCustomer.html");
 }

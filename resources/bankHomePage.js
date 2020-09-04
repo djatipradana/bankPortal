@@ -126,15 +126,17 @@ async function clickVerifyKYC() {
     let user_name_v = document.getElementById("user_name_v").value;
     let getCustForVerify = await contractInstance.methods.getCustForVerify(user_name_v, current_bank_name_l).call();
     console.log(getCustForVerify)
-    if (getCustForVerify == 0) {
+    if (getCustForVerify == 3) {
         localStorage.setItem("user_name_v",user_name_v);
         document.location.assign('./form/verifyForm.html');
     } else if (getCustForVerify == 2) {
         alert("Customer profile has been verified.");
+        setTimeout(function () { location.reload(1); }, 500);
         //document.location.assign('./bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been registered yet.");
+        setTimeout(function () { location.reload(1); }, 500);
         //document.location.assign('./bankHomePage.html');
         return false;
     }
@@ -144,11 +146,12 @@ async function clickDeleteKYC() {
     let user_name_d = document.getElementById("user_name_d").value;
     let getCustForDelete = await contractInstance.methods.getCustForDelete(user_name_d, current_bank_name_l).call();
     console.log(getCustForDelete)
-    if (getCustForDelete == 0) {
+    if (getCustForDelete == 3) {
         localStorage.setItem("user_name_d",user_name_d);
         window.location = './form/deleteForm.html';
     } else {
         alert("Customer profile hasn't been registered yet.");
+        setTimeout(function () { location.reload(1); }, 500);
         //document.location.assign('./bankHomePage.html');
         return false;
     }
@@ -195,7 +198,7 @@ async function increaseRating() {
         const transaction = web3.eth.sendSignedTransaction(raw)
             .on('transactionHash', hash => {
                 console.log('TX Hash', hash)
-                console.log('Transaction was send, please wait ... ')
+                alert('Transaction was send, please wait ... ')
                 console.log("https://ropsten.etherscan.io/tx/"+ hash);
             })
             .then(receipt => {
@@ -206,6 +209,7 @@ async function increaseRating() {
                 if(receipt.status == true ) {
                     console.log('Transaction Success')
                     alert("Customer rating successfully upgraded.");
+                    setTimeout(function () { location.reload(1); }, 500);
                     //document.location.assign('./bankHomePage.html');
                     return false;
                     //alert('Transaction Success')
@@ -213,6 +217,7 @@ async function increaseRating() {
                 else if(receipt.status == false) {
                     console.log('Transaction Failed')
                     alert("Customer rating hasn't been successfully upgraded.");
+                    setTimeout(function () { location.reload(1); }, 500);
                     //document.location.assign('./bankHomePage.html');
                     return false;
                 }
@@ -235,6 +240,11 @@ async function increaseRating() {
             //document.location.assign('./bankHomePage.html');
             return false;
         }   */
+    } else {
+        alert("Customer profile doesn't exist.");
+        setTimeout(function () { location.reload(1); }, 500);
+        //document.location.assign('./bankHomePage.html');
+        return false;
     }
 }
 
@@ -277,7 +287,7 @@ async function decreaseRating() {
         const transaction = web3.eth.sendSignedTransaction(raw)
             .on('transactionHash', hash => {
                 console.log('TX Hash', hash)
-                console.log('Transaction was send, please wait ... ')
+                alert('Transaction was send, please wait ... ')
                 console.log("https://ropsten.etherscan.io/tx/"+ hash);
             })
             .then(receipt => {
@@ -288,6 +298,7 @@ async function decreaseRating() {
                 if(receipt.status == true ) {
                     console.log('Transaction Success')
                     alert("Customer rating successfully downgraded.");
+                    setTimeout(function () { location.reload(1); }, 500);        
                     //document.location.assign('./bankHomePage.html');
                     return false;
                     //alert('Transaction Success')
@@ -295,6 +306,7 @@ async function decreaseRating() {
                 else if(receipt.status == false) {
                     console.log('Transaction Failed')
                     alert("Customer rating hasn't been successfully downgraded.");
+                    setTimeout(function () { location.reload(1); }, 500);
                     //window.location = './bankHomePage.html';
                     return false;
                 }
@@ -317,6 +329,11 @@ async function decreaseRating() {
             //window.location = './bankHomePage.html';
             return false;
         }   */ 
+    } else {
+        alert("Customer profile doesn't exist.");
+        setTimeout(function () { location.reload(1); }, 500);
+        //document.location.assign('./bankHomePage.html');
+        return false;
     }
 }
 

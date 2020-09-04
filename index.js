@@ -153,13 +153,14 @@ async function generate(bank_name1, pass, reg) {
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            setTimeout(function () { location.reload(1); }, 1000);
+            //setTimeout(function () { location.reload(1); }, 1000);
             console.log(receipt.status)
             console.log(privKey.substring(2),dataAcc.address,pass);
                 
             if(receipt.status == true ) {
                 console.log('Transaction Success')
                 alert(bank_name1 + " successfully registered to the network. \nLogin from the \"Login\" Tab on the top-right side of the webpage.");
+                setTimeout(function () { location.reload(1); }, 500);
                 encryptPrivateKey(dataAcc.privateKey,dataAcc.address,pass);
                 return false;
                 //alert('Transaction Success')
@@ -167,6 +168,7 @@ async function generate(bank_name1, pass, reg) {
             else if(receipt.status == false) {
                 console.log('Transaction Failed')
                 alert(bank_name1 + " hasn't been successfully registered to the network. \nPlease try again.");
+                setTimeout(function () { location.reload(1); }, 500);
                 return false;
             }
         })
@@ -255,7 +257,6 @@ async function connection(bank_name_l, pass_l) {
             gas: 4700000
         }) == true) */ 
     let checkBank = await contractInstance.methods.checkBank(bank_name_l, current_account, pass_l).call(); 
-    console.log(checkBank)
     if (checkBank == true) {
         alert("Welcome " + bank_name_l);
         document.location.assign('./resources/bankHomePage.html');
@@ -263,6 +264,7 @@ async function connection(bank_name_l, pass_l) {
         //localStorage.bank_eth_account = pass_l;
     } else { 
         alert("Invalid bank name, password or keystore. \nThe bank hasn't been registered yet. \nSign up before proceeding further.");
+        setTimeout(function () { location.reload(1); }, 500);
         return false;
     }
 }
