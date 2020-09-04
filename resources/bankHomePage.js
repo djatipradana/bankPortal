@@ -125,6 +125,7 @@ async function fillDetails() {
 async function clickVerifyKYC() {
     let user_name_v = document.getElementById("user_name_v").value;
     let getCustForVerify = await contractInstance.methods.getCustForVerify(user_name_v, current_bank_name_l).call();
+    console.log(getCustForVerify)
     if (getCustForVerify == 0) {
         localStorage.setItem("user_name_v",user_name_v);
         document.location.assign('./form/verifyForm.html');
@@ -142,6 +143,7 @@ async function clickVerifyKYC() {
 async function clickDeleteKYC() {
     let user_name_d = document.getElementById("user_name_d").value;
     let getCustForDelete = await contractInstance.methods.getCustForDelete(user_name_d, current_bank_name_l).call();
+    console.log(getCustForDelete)
     if (getCustForDelete == 0) {
         localStorage.setItem("user_name_d",user_name_d);
         window.location = './form/deleteForm.html';
