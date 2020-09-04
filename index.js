@@ -255,6 +255,7 @@ async function connection(bank_name_l, pass_l) {
             gas: 4700000
         }) == true) */ 
     let checkBank = await contractInstance.methods.checkBank(bank_name_l, current_account, pass_l).call(); 
+    console.log(checkBank)
     if (checkBank == true) {
         alert("Welcome " + bank_name_l);
         document.location.assign('./resources/bankHomePage.html');
