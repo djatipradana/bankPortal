@@ -3,7 +3,7 @@
 
 let web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/6a68c430ab2e43adb0762c4cfa9bbb42"));
 let contractInstance = new web3.eth.Contract(abi, contractAddress);
-console.log(web3, contractInstance)
+//console.log(web3, contractInstance)
 
 /*var kycContract = web3.eth.contract(abi);
 var deployedContract = kycContract.new({
@@ -84,7 +84,7 @@ function sendSign(ownerAccountAddress,privateKey1,myData,gasLimit){
 }
 
 
-function onLogin() {
+function onClickLogin() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     var bankName = document.getElementById("bankName").value;
@@ -102,7 +102,7 @@ function onLogin() {
 
 async function connection(username, password, bankName) {
     
-    //window.location = './resources/customerHomePage.html';
+    //document.location = './resources/customerHomePage.html';
     let objKeyStore = JSON.parse(keyStoreEnc);
     let decryptData=web3.eth.accounts.decrypt(objKeyStore, password)
     let privateKey=decryptData.privateKey.substring(2);
@@ -114,7 +114,7 @@ async function connection(username, password, bankName) {
     let acc= web3.eth.accounts.privateKeyToAccount(hexKey);
     let current_account= acc.address;
     localStorage.setItem("accountAddress",current_account);
-    console.log(username, password, bankName)
+    //console.log(username, password, bankName)
 
     let cek = web3.eth.getBalance(ownerAccountAddress)
     console.log('owner', ownerPrivateKey, ownerAccountAddress, cek)
@@ -126,7 +126,7 @@ async function connection(username, password, bankName) {
     let checkCustomer = await contractInstance.methods.checkAccountCust(username, current_account, password, bankName).call(); 
     console.log(checkCustomer)
     
-    if (checkCustomer == true) {
+    if (checkCustomer == 3) {
         alert("Welcome " + username);
         window.location = './resources/customerHomePage.html';
         return false;
