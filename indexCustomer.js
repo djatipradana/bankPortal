@@ -1,7 +1,9 @@
 //const Web3 = require('web3');
 //const Tx = require('ethereumjs-tx'); 
 
-const web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/6a68c430ab2e43adb0762c4cfa9bbb42"));
+let web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/6a68c430ab2e43adb0762c4cfa9bbb42"));
+let contractInstance = new web3.eth.Contract(abi, contractAddress);
+console.log(web3, contractInstance)
 
 /*var kycContract = web3.eth.contract(abi);
 var deployedContract = kycContract.new({
@@ -10,7 +12,6 @@ var deployedContract = kycContract.new({
     gas: 4700000
 });
 var contractInstance = kycContract.at(contractAddress);*/
-const contractInstance = new web3.eth.Contract(abi, contractAddress);
 var keyStoreEnc;
 
 if (typeof(Storage) == "undefined") {
@@ -83,7 +84,7 @@ function sendSign(ownerAccountAddress,privateKey1,myData,gasLimit){
 }
 
 
-function onClickLogin() {
+function onLogin() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     var bankName = document.getElementById("bankName").value;
@@ -100,6 +101,8 @@ function onClickLogin() {
 }
 
 async function connection(username, password, bankName) {
+    
+    //window.location = './resources/customerHomePage.html';
     let objKeyStore = JSON.parse(keyStoreEnc);
     let decryptData=web3.eth.accounts.decrypt(objKeyStore, password)
     let privateKey=decryptData.privateKey.substring(2);
@@ -113,7 +116,7 @@ async function connection(username, password, bankName) {
     localStorage.setItem("accountAddress",current_account);
     console.log(username, password, bankName)
 
-    let cek = await web3.eth.getBalance(ownerAccountAddress)
+    let cek = web3.eth.getBalance(ownerAccountAddress)
     console.log('owner', ownerPrivateKey, ownerAccountAddress, cek)
     /*if (contractInstance.checkBank.call(bank_name_l, current_account, {
             from: ,
