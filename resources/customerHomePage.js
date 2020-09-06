@@ -30,13 +30,12 @@ var element = [
     "occupation",
     "income",
     "dob",
-    "gender_m",
-    "gender_f",
+    "gender",
     "residence",
+    "country",
     "phone1",
     "phone2",
-    "email",
-    "country"
+    "email"
 ];
 
 
@@ -69,7 +68,7 @@ async function fillForm() {
     // Round to nearest 2
     const starPercentageRounded = `${Math.round(starPercentage/2) * 2}%`;
     // Set width of stars-inner to percentage
-    document.querySelector(".stars-inner").style.width = starPercentageRounded;
+    document.querySelector(".stars-inner-cust").style.width = starPercentageRounded;
     // Add number rating
     document.querySelector(".customer_rating").innerHTML = toStar;
 
@@ -93,14 +92,17 @@ async function fillForm() {
     
     var dataProfile = viewCust[2];
     var fill = "";
+    var index = 0;
     var check = Math.min(dataProfile.length);
     for(var i=0; i<check; i++) {
         if (dataProfile.charAt(i) == '!' && dataProfile.charAt(i+1) == '@' && dataProfile.charAt(i+2) == '#') {
             for (var j=i+3; j<check; j++) {
                 fill = fill + dataProfile.charAt(j);
                 if (dataProfile.charAt(j) == '!') {
-                    document.getElementById(element[i]).innerHTML = fill;
-                    fill = ""
+                    var editFill = fill.slice(0,-1);
+                    document.getElementById(element[index++]).innerHTML = fill;
+                    fill = "";
+                    editFill = "";
                     break;
                 }
             }
