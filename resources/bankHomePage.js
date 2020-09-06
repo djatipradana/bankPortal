@@ -175,7 +175,7 @@ async function increaseRating() {
         let increaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, true).encodeABI();
         //sendSign(increaseRatingCust,100000);
         
-        web3.eth.getTransactionCount(contractAddress, (err, txCount) => {
+        web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
         // Build the transaction
         const txObject = {
             nonce:    web3.utils.toHex(txCount),
@@ -266,7 +266,7 @@ async function decreaseRating() {
         let decreaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, false).encodeABI();
         //sendSign(decreaseRatingCust,200000);
 
-        web3.eth.getTransactionCount(contractAddress, (err, txCount) => {
+        web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
         // Build the transaction
         const txObject = {
             nonce:    web3.utils.toHex(txCount),

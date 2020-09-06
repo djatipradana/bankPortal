@@ -127,12 +127,9 @@ async function fillForm() {
     // Add number rating
     document.querySelector(".customer_rating").innerHTML = toStar;
 
-    //document.getElementById("customer_rating").innerHTML = viewCust[4];
-    
     document.getElementById("customer_address").innerHTML = viewCust[0];
     document.getElementById("username").innerHTML = viewCust[1];
     //document.getElementById("bank_name").innerHTML = viewCust[3];
-    //document.getElementById("bank_rating").innerHTML = viewBankRating[0];
     
     var dataProfile = viewCust[2];
     var fill = "";
