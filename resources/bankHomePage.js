@@ -163,8 +163,10 @@ async function clickDeleteKYC() {
 
 async function increaseRating() {
     let user_name_mr = document.getElementById("user_name_mr").value;
-    let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
-    if (user_name_mr == checkCustName) {
+    //let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
+    let checkCustName = await contractInstance.methods.getCustForDelete(user_name_mr, current_bank_name_l).call();
+    console.log(checkCustName)
+    if (checkCustName == 3) {
         /*let increaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, true).send({
             from: current_bankAddress,
             gas: 4700000
@@ -252,8 +254,10 @@ async function increaseRating() {
 
 async function decreaseRating() {
     let user_name_mr = document.getElementById("user_name_mr").value;
-    let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
-    if (user_name_mr == checkCustName) {
+    //let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
+    let checkCustName = await contractInstance.methods.getCustForDelete(user_name_mr, current_bank_name_l).call();
+    console.log(checkCustName)
+    if (checkCustName == 3) {
         /*let decreaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, false).send({
             from: current_bankAddress,
             gas: 4700000
