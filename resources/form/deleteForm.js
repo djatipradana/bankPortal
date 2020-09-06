@@ -152,7 +152,7 @@ async function fillForm() {
                 fill = fill + dataProfile.charAt(j);
                 if (dataProfile.charAt(j) == '!') {
                     var editFill = fill.slice(0,-1);
-                    document.getElementById(element[index++]).innerHTML = fill;
+                    document.getElementById(element[index++]).innerHTML = editFill;
                     fill = "";
                     editFill = "";
                     break;
