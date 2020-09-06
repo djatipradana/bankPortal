@@ -38,7 +38,6 @@ var element = [
     "email"
 ];
 
-
 //var current_account = localStorage.bank_eth_account;
 //var user_name = localStorage.user_name_d;
 
