@@ -113,11 +113,8 @@ function sendSign(myData,gasLimit){
 
 async function fillForm() {
     let viewCust = await contractInstance.methods.viewCustomer(current_user_name_v).call();
-    let viewBankRating = await contractInstance.methods.getBankRating(current_bank_name_l).call();
-    /*
-    let viewCust2 = await contractInstance.methods.viewCustomer2(current_username).call();
-    let viewCust3 = await contractInstance.methods.viewCustomer3(current_username).call();
-    */
+    //let viewBankRating = await contractInstance.methods.getBankRating(current_bank_name_l).call();
+    
     document.getElementById("kyc_status").innerHTML = viewCust[5];
 
     const toStar = parseFloat(viewCust[4])/100;

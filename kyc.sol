@@ -457,10 +457,10 @@ contract Kyc {
     
     function getCustForVerify(string memory uname, string memory bankName) public custNotExist(uname) view returns(uint8) {
         if (stringsEqual(cust[uname].uname, uname) && stringsEqual(cust[uname].bankName, bankName)) {
-            if (stringsEqual(cust[uname].uname, "Not Verified") || stringsEqual(cust[uname].uname, "Rejected")) {
+            if (stringsEqual(cust[uname].kycStatus, "Not Verified") || stringsEqual(cust[uname].kycStatus, "Rejected")) {
                 return 3;
             }
-            else if (stringsEqual(cust[uname].uname, "Verified")) {
+            else if (stringsEqual(cust[uname].kycStatus, "Verified")) {
                 return 2;
             }
         }

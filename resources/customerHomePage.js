@@ -79,6 +79,7 @@ async function fillForm() {
     document.getElementById("bank_name").innerHTML = viewCust[3];
 
     const toStarBank = parseFloat(viewBankRating[0])/100;
+    console.log(toStarBank)
     // Get percentage
     const starPercentageBank = (toStarBank/starsTotal) * 100;
     // Round to nearest 2
