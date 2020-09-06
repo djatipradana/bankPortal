@@ -3,7 +3,7 @@
 
 let web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/6a68c430ab2e43adb0762c4cfa9bbb42"));
 let contractInstance = new web3.eth.Contract(abi, contractAddress);
-//console.log(web3, contractInstance)
+console.log(web3, contractInstance)
 
 /*var kycContract = web3.eth.contract(abi);
 var deployedContract = kycContract.new({
@@ -231,7 +231,7 @@ async function generate(username_c, password_c, bankNameSignup) {
             if(receipt.status == true ) {
                 console.log('Transaction Success')
                 alert("Account successfully registered. \nGo to the login area to proceed.");
-                setTimeout(function () { location.reload(1); }, 500);
+                setTimeout(function () { document.location.assign('./indexCustomer.html'); }, 500);
                 encryptPrivateKey(dataAcc.privateKey,dataAcc.address,password_c);
                 return false;
                 //alert('Transaction Success')
@@ -376,7 +376,7 @@ async function generateForgot(usernameForgot, passwordForgot) {
                 if(receipt.status == true ) {
                     console.log('Transaction Success')
                     alert(usernameForgot + " account successfully updated. \nGo to the login area to proceed.");
-                    setTimeout(function () { location.reload(1); }, 500);
+                    setTimeout(function () { document.location.assign('./indexCustomer.html'); }, 500);
                     encryptPrivateKey(dataAcc.privateKey,dataAcc.address,passwordForgot);
                     return false;
                     //alert('Transaction Success')

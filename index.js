@@ -12,7 +12,7 @@ var deployedContract = kycContract.new({
 var contractInstance = kycContract.at(contractAddress);*/
 const contractInstance = new web3.eth.Contract(abi, contractAddress);
 var keyStoreEnc;
-
+console.log(web3, contractInstance)
 if (typeof(Storage) == "undefined") {
     alert("Sorry, your browser does not support web storage. \nUpgrade to IE9 or contemporary platforms");
 }
@@ -257,7 +257,7 @@ async function connection(bank_name_l, pass_l) {
             gas: 4700000
         }) == true) */ 
     let checkBank = await contractInstance.methods.checkBank(bank_name_l, current_account, pass_l).call(); 
-    if (checkBank == true) {
+    if (checkBank == 3) {
         alert("Welcome " + bank_name_l);
         document.location.assign('./resources/bankHomePage.html');
         return false;
