@@ -39,7 +39,7 @@ function sendSign(myData,gasLimit){
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
         gasLimit: web3.utils.toHex(gasLimit),
         gasPrice: web3.utils.toHex(web3.utils.toWei('12', 'gwei')),
-        data: addCust  
+        data: myData  
     }
     // Sign the transaction
     //const tx = new Tx(txObject);
@@ -100,6 +100,7 @@ function onClickSend() {
     //var username = document.getElementById("uname").value;
     
     var data = getInfo();
+    console.log(data)
     addCust(current_address, current_username, data, current_bankName);
 
 }
