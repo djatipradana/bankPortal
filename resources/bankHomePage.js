@@ -324,14 +324,12 @@ async function decreaseRating() {
 }
 
 function logout(){
-    window.localStorage.clear();
-    /*
+    //window.localStorage.clear();
     window.localStorage.removeItem("bankPrivKey");
     window.localStorage.removeItem("bankAddress");
     window.localStorage.removeItem("bank_name_l");
     window.localStorage.removeItem("user_name_v");
     window.localStorage.removeItem("user_name_d");
-    */
     window.location.assign("../index.html");
 }
 

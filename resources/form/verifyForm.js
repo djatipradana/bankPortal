@@ -210,7 +210,7 @@ async function onClickAccept() {
         nonce:    web3.utils.toHex(txCount),
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
-        gasLimit: web3.utils.toHex(20000),
+        gasLimit: web3.utils.toHex(80000),
         gasPrice: web3.utils.toHex(web3.utils.toWei('12', 'gwei')),
         data: verified  
     }
@@ -288,7 +288,7 @@ async function onClickReject() {
         nonce:    web3.utils.toHex(txCount),
         to:       contractAddress,
         value:    web3.utils.toHex(web3.utils.toWei('0', 'ether')),
-        gasLimit: web3.utils.toHex(20000),
+        gasLimit: web3.utils.toHex(80000),
         gasPrice: web3.utils.toHex(web3.utils.toWei('12', 'gwei')),
         data: rejected  
     }
