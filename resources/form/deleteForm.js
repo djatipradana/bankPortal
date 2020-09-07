@@ -164,10 +164,17 @@ async function onClickDelete() {
         from: current_bankAddress,
         gas: 4700000
     }); */
+
+    let filling = await contractInstance.methods.fillTable(current_bank_name_l).call();
+    var index = filling.indexOf(current_user_name_d);
+    if (index >= 0) {
+        filling.splice( index, 1 );
+    }
+
     if (confirm("Are you sure to delete the KYC profile of " + current_user_name_d + " ?") == true) {
         /*let accDelete = await contractInstance.methods.removeAccountCust(current_user_name_d).encodeABI();
         sendSign(accDelete,100000); */
-        let custDelete = await contractInstance.methods.removeCust(current_user_name_d).encodeABI();
+        let custDelete = await contractInstance.methods.removeCust(current_user_name_d, current_bank_name_l, filling).encodeABI();
         sendSign(custDelete,200000);
         
         /*if (count == 2) {
