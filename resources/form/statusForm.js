@@ -39,7 +39,7 @@ async function table() {
     console.log(filling);
     if (filling.length < 1) {
         alert("Customer data doesn't exist.");
-        document.location.assign('../bankHomePage.html');
+        window.location.assign('../bankHomePage.html');
         return false;
     } else {
         //let userReq = [];

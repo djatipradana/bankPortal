@@ -78,7 +78,7 @@ function sendSign(myData,gasLimit){
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            //setTimeout(function () { location.reload(1); }, 1000);
+            //setTimeout(function () { window.location.reload(1); }, 1000);
             console.log(receipt.status)
             if(receipt.status == true ) {
                 console.log('Transaction Success')
@@ -128,16 +128,16 @@ async function clickVerifyKYC() {
     console.log(getCustForVerify)
     if (getCustForVerify == 3) {
         localStorage.setItem("user_name_v",user_name_v);
-        document.location.assign('./form/verifyForm.html');
+        window.window.location.assign('./form/verifyForm.html');
     } else if (getCustForVerify == 2) {
         alert("Customer profile has been verified.");
-        setTimeout(function () { location.reload(1); }, 500);
-        //document.location.assign('./bankHomePage.html');
+        setTimeout(function () { window.location.reload(1); }, 500);
+        //window.location.assign('./bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been registered yet.");
-        setTimeout(function () { location.reload(1); }, 500);
-        //document.location.assign('./bankHomePage.html');
+        setTimeout(function () { window.location.reload(1); }, 500);
+        //window.location.assign('./bankHomePage.html');
         return false;
     }
 }
@@ -151,7 +151,7 @@ async function clickDeleteKYC() {
         window.location = './form/deleteForm.html';
     } else {
         alert("Customer profile hasn't been registered yet.");
-        setTimeout(function () { location.reload(1); }, 500);
+        setTimeout(function () { window.location.reload(1); }, 500);
         //document.location.assign('./bankHomePage.html');
         return false;
     }
@@ -211,16 +211,16 @@ async function increaseRating() {
                 if(receipt.status == true ) {
                     console.log('Transaction Success')
                     alert("Customer rating successfully upgraded.");
-                    setTimeout(function () { location.reload(1); }, 500);
-                    //document.location.assign('./bankHomePage.html');
+                    setTimeout(function () { window.location.reload(1); }, 500);
+                    //window.location.assign('./bankHomePage.html');
                     return false;
                     //alert('Transaction Success')
                 }
                 else if(receipt.status == false) {
                     console.log('Transaction Failed')
                     alert("Customer rating hasn't been successfully upgraded.");
-                    setTimeout(function () { location.reload(1); }, 500);
-                    //document.location.assign('./bankHomePage.html');
+                    setTimeout(function () { window.location.reload(1); }, 500);
+                    //window.location.assign('./bankHomePage.html');
                     return false;
                 }
             })
@@ -233,19 +233,10 @@ async function increaseRating() {
             })
         });
 
-        /*if (increaseRatingCust == 0) {
-            alert("Customer rating successfully upgraded.");
-            //document.location.assign('./bankHomePage.html');
-            return false;
-        } else {
-            alert("Customer rating hasn't been successfully upgraded.");
-            //document.location.assign('./bankHomePage.html');
-            return false;
-        }   */
     } else {
         alert("Customer profile doesn't exist.");
-        setTimeout(function () { location.reload(1); }, 500);
-        //document.location.assign('./bankHomePage.html');
+        setTimeout(function () { window.location.reload(1); }, 500);
+        //window.location.assign('./bankHomePage.html');
         return false;
     }
 }
@@ -302,15 +293,15 @@ async function decreaseRating() {
                 if(receipt.status == true ) {
                     console.log('Transaction Success')
                     alert("Customer rating successfully downgraded.");
-                    setTimeout(function () { location.reload(1); }, 500);        
-                    //document.location.assign('./bankHomePage.html');
+                    setTimeout(function () { window.location.reload(1); }, 500);        
+                    //window.location.assign('./bankHomePage.html');
                     return false;
                     //alert('Transaction Success')
                 }
                 else if(receipt.status == false) {
                     console.log('Transaction Failed')
                     alert("Customer rating hasn't been successfully downgraded.");
-                    setTimeout(function () { location.reload(1); }, 500);
+                    setTimeout(function () { window.location.reload(1); }, 500);
                     //window.location = './bankHomePage.html';
                     return false;
                 }
@@ -323,31 +314,25 @@ async function decreaseRating() {
                 console.log('Extra Code After Everything')
             })
         });
-
-        /*if (decreaseRatingCust == 1) {
-            alert("Customer rating successfully downgraded.");
-            //document.location.assign('./bankHomePage.html');
-            return false;
-        } else {
-            alert("Customer rating hasn't been successfully downgraded.");
-            //window.location = './bankHomePage.html';
-            return false;
-        }   */ 
+ 
     } else {
         alert("Customer profile doesn't exist.");
-        setTimeout(function () { location.reload(1); }, 500);
-        //document.location.assign('./bankHomePage.html');
+        setTimeout(function () { window.location.reload(1); }, 500);
+        //window.location.assign('./bankHomePage.html');
         return false;
     }
 }
 
 function logout(){
-    localStorage.removeItem("bankPrivKey");
-    localStorage.removeItem("bankAddress");
-    localStorage.removeItem("bank_name_l");
-    localStorage.removeItem("user_name_v");
-    localStorage.removeItem("user_name_d");
-    document.location.assign("../index.html");
+    window.localStorage.clear();
+    /*
+    window.localStorage.removeItem("bankPrivKey");
+    window.localStorage.removeItem("bankAddress");
+    window.localStorage.removeItem("bank_name_l");
+    window.localStorage.removeItem("user_name_v");
+    window.localStorage.removeItem("user_name_d");
+    */
+    window.location.assign("../index.html");
 }
 
 

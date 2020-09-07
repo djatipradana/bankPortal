@@ -50,7 +50,7 @@ function sendSign(ownerAccountAddress,privateKey1,myData,gasLimit){
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            setTimeout(function () { location.reload(1); }, 1000);
+            setTimeout(function () { window.location.reload(1); }, 1000);
             console.log(receipt.status)
             if(receipt.status == true ) {
                 console.log('Transaction Success')
@@ -94,7 +94,6 @@ function onSignUp() {
     if (confirm("I accept that the details provided are correct.") == true) {
         //console.log(bank_name1,pass,reg)
         generate(bank_name1, pass, reg);
-        //document.location.assign('./index.html');
         return false;
     }
 }
@@ -153,14 +152,14 @@ async function generate(bank_name1, pass, reg) {
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            //setTimeout(function () { location.reload(1); }, 1000);
+            //setTimeout(function () { window.location.reload(1); }, 1000);
             console.log(receipt.status)
             console.log(privKey.substring(2),dataAcc.address,pass);
                 
             if(receipt.status == true ) {
                 console.log('Transaction Success')
                 alert(bank_name1 + " successfully registered to the network. \nLogin from the \"Login\" Tab on the top-right side of the webpage.");
-                setTimeout(function () { location.reload(1); }, 500);
+                setTimeout(function () { window.location.reload(1); }, 500);
                 encryptPrivateKey(dataAcc.privateKey,dataAcc.address,pass);
                 return false;
                 //alert('Transaction Success')
@@ -168,7 +167,7 @@ async function generate(bank_name1, pass, reg) {
             else if(receipt.status == false) {
                 console.log('Transaction Failed')
                 alert(bank_name1 + " hasn't been successfully registered to the network. \nPlease try again.");
-                setTimeout(function () { location.reload(1); }, 500);
+                setTimeout(function () { window.location.reload(1); }, 500);
                 return false;
             }
         })
@@ -245,12 +244,12 @@ async function connection(bank_name_l, pass_l) {
     let decryptData=web3.eth.accounts.decrypt(objKeyStore, pass_l)
     let privateKey=decryptData.privateKey.substring(2);
 
-    localStorage.setItem("bank_name_l",bank_name_l);
-    localStorage.setItem("bankPrivKey",privateKey);
+    window.localStorage.setItem("bank_name_l",bank_name_l);
+    window.localStorage.setItem("bankPrivKey",privateKey);
     let hexKey="0x"+privateKey;
     let acc= web3.eth.accounts.privateKeyToAccount(hexKey);
     let current_account= acc.address;
-    localStorage.setItem("bankAddress",current_account);
+    window.localStorage.setItem("bankAddress",current_account);
 
     /*if (contractInstance.checkBank.call(bank_name_l, current_account, {
             from: ,
@@ -259,12 +258,12 @@ async function connection(bank_name_l, pass_l) {
     let checkBank = await contractInstance.methods.checkBank(bank_name_l, current_account, pass_l).call(); 
     if (checkBank == 3) {
         alert("Welcome " + bank_name_l);
-        document.location.assign('./resources/bankHomePage.html');
+        window.location.assign('./resources/bankHomePage.html');
         return false;
         //localStorage.bank_eth_account = pass_l;
     } else { 
         alert("Invalid bank name, password or keystore. \nThe bank hasn't been registered yet. \nSign up before proceeding further.");
-        setTimeout(function () { location.reload(1); }, 500);
+        setTimeout(function () { window.location.reload(1); }, 500);
         return false;
     }
 }

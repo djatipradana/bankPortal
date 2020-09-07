@@ -87,14 +87,14 @@ function sendSign(myData,gasLimit){
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            //setTimeout(function () { location.reload(1); }, 1000);
+            //setTimeout(function () { window.location.reload(1); }, 1000);
             console.log(receipt.status)
             //count++;
             if(receipt.status == true ) {
                 console.log('Transaction Success')
                 alert("Customer profile successfully deleted.");
                 localStorage.removeItem("user_name_d");
-                document.location.assign('../bankHomePage.html');
+                window.location.assign('../bankHomePage.html');
                 return false;
                 //alert('Transaction Success')
             }
@@ -174,7 +174,7 @@ async function onClickDelete() {
             count = 0;
             alert("Customer profile successfully deleted.");
             localStorage.removeItem("user_name_d");
-            document.location.assign('../bankHomePage.html');
+            window.location.assign('../bankHomePage.html');
             return false;
         } else {
             alert("Customer profile hasn't been successfully deleted.");
@@ -182,4 +182,9 @@ async function onClickDelete() {
         }   */
     }
 
+}
+
+function back() {
+    window.localStorage.removeItem("user_name_d");
+    window.location.assign("../bankHomePage.html");
 }

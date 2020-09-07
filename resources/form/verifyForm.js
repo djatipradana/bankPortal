@@ -88,7 +88,7 @@ function sendSign(myData,gasLimit){
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            //setTimeout(function () { location.reload(1); }, 1000);
+            //setTimeout(function () { window.location.reload(1); }, 1000);
             console.log(receipt.status)
             if(receipt.status == true ) {
                 console.log('Transaction Success')
@@ -236,13 +236,13 @@ async function onClickAccept() {
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            //setTimeout(function () { location.reload(1); }, 1000);
+            //setTimeout(function () { window.location.reload(1); }, 1000);
             console.log(receipt.status)
             if(receipt.status == true ) {
                 console.log('Transaction Success')
                 alert("Customer profile successfully verified.");
                 localStorage.removeItem("user_name_v");
-                document.location.assign('../bankHomePage.html');
+                window.location.assign('../bankHomePage.html');
                 return false;
                 //alert('Transaction Success')
             }
@@ -264,7 +264,7 @@ async function onClickAccept() {
     /*if (verified == 0) {
         alert("Customer profile successfully verified.");
         localStorage.removeItem("user_name_v");
-        document.location.assign('../bankHomePage.html');
+        window.location.assign('../bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been successfully verified.");
@@ -314,13 +314,13 @@ async function onClickReject() {
         .then(receipt => {
             console.log('Mined', receipt)
             console.log("Your transaction was mined...")
-            //setTimeout(function () { location.reload(1); }, 1000);
+            //setTimeout(function () { window.location.reload(1); }, 1000);
             console.log(receipt.status)
             if(receipt.status == true ) {
                 console.log('Transaction Success')
                 alert("Customer profile successfully rejected.");
                 localStorage.removeItem("user_name_v");
-                document.location.assign('../bankHomePage.html');
+                window.location.assign('../bankHomePage.html');
                 return false;
                 //alert('Transaction Success')
             }
@@ -342,10 +342,15 @@ async function onClickReject() {
     /*if (rejected == 0) {
         alert("Customer profile successfully rejected.");
         localStorage.removeItem("user_name_v");
-        document.location.assign('../bankHomePage.html');
+        window.location.assign('../bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been successfully rejected.");
         return false;
     }   */
+}
+
+function back() {
+    window.localStorage.removeItem("user_name_v");
+    window.location.assign("../bankHomePage.html");
 }

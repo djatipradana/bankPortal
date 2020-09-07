@@ -125,9 +125,12 @@ async function fillForm() {
 
 
 function logout(){
-    localStorage.removeItem("accountPrivKey");
-    localStorage.removeItem("accountAddress");
-    localStorage.removeItem("username");
-    localStorage.removeItem("bankName");
-    document.location.assign("../indexCustomer.html");
+    window.localStorage.clear();
+    /*
+    window.localStorage.removeItem("accountPrivKey");
+    window.localStorage.removeItem("accountAddress");
+    window.localStorage.removeItem("username");
+    window.localStorage.removeItem("bankName");
+    */
+    window.location.assign("../indexCustomer.html");
 }
