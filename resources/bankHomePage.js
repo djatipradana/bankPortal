@@ -131,12 +131,12 @@ async function clickVerifyKYC() {
         window.window.location.assign('./form/verifyForm.html');
     } else if (getCustForVerify == 2) {
         alert("Customer profile has been verified.");
-        setTimeout(function () { window.location.reload(1); }, 500);
+        setTimeout(function () { window.location.reload(1); }, 100);
         //window.location.assign('./bankHomePage.html');
         return false;
     } else {
         alert("Customer profile hasn't been registered yet.");
-        setTimeout(function () { window.location.reload(1); }, 500);
+        setTimeout(function () { window.location.reload(1); }, 100);
         //window.location.assign('./bankHomePage.html');
         return false;
     }
@@ -151,7 +151,7 @@ async function clickDeleteKYC() {
         window.location = './form/deleteForm.html';
     } else {
         alert("Customer profile hasn't been registered yet.");
-        setTimeout(function () { window.location.reload(1); }, 500);
+        setTimeout(function () { window.location.reload(1); }, 100);
         //document.location.assign('./bankHomePage.html');
         return false;
     }
@@ -211,7 +211,7 @@ async function increaseRating() {
                 if(receipt.status == true ) {
                     console.log('Transaction Success')
                     alert("Customer rating successfully upgraded.");
-                    setTimeout(function () { window.location.reload(1); }, 500);
+                    setTimeout(function () { window.location.reload(1); }, 100);
                     //window.location.assign('./bankHomePage.html');
                     return false;
                     //alert('Transaction Success')
@@ -219,7 +219,7 @@ async function increaseRating() {
                 else if(receipt.status == false) {
                     console.log('Transaction Failed')
                     alert("Customer rating hasn't been successfully upgraded.");
-                    setTimeout(function () { window.location.reload(1); }, 500);
+                    setTimeout(function () { window.location.reload(1); }, 100);
                     //window.location.assign('./bankHomePage.html');
                     return false;
                 }
@@ -227,7 +227,7 @@ async function increaseRating() {
             .catch( err => {
                 console.log('Error', err)
                 alert("Customer rating hasn't been successfully upgraded.");
-                setTimeout(function () { window.location.reload(1); }, 500);
+                setTimeout(function () { window.location.reload(1); }, 100);
                 return false;
             })
             .finally(() => {
@@ -237,7 +237,7 @@ async function increaseRating() {
 
     } else {
         alert("Customer profile doesn't exist.");
-        setTimeout(function () { window.location.reload(1); }, 500);
+        setTimeout(function () { window.location.reload(1); }, 100);
         //window.location.assign('./bankHomePage.html');
         return false;
     }
@@ -295,7 +295,7 @@ async function decreaseRating() {
                 if(receipt.status == true ) {
                     console.log('Transaction Success')
                     alert("Customer rating successfully downgraded.");
-                    setTimeout(function () { window.location.reload(1); }, 500);        
+                    setTimeout(function () { window.location.reload(1); }, 100);        
                     //window.location.assign('./bankHomePage.html');
                     return false;
                     //alert('Transaction Success')
@@ -303,7 +303,7 @@ async function decreaseRating() {
                 else if(receipt.status == false) {
                     console.log('Transaction Failed')
                     alert("Customer rating hasn't been successfully downgraded.");
-                    setTimeout(function () { window.location.reload(1); }, 500);
+                    setTimeout(function () { window.location.reload(1); }, 100);
                     //window.location = './bankHomePage.html';
                     return false;
                 }
@@ -311,7 +311,7 @@ async function decreaseRating() {
             .catch( err => {
                 console.log('Error', err)
                 alert("Customer rating hasn't been successfully downgraded.");
-                setTimeout(function () { window.location.reload(1); }, 500);
+                setTimeout(function () { window.location.reload(1); }, 100);
                 return false;
             })
             .finally(() => {
@@ -321,7 +321,7 @@ async function decreaseRating() {
  
     } else {
         alert("Customer profile doesn't exist.");
-        setTimeout(function () { window.location.reload(1); }, 500);
+        setTimeout(function () { window.location.reload(1); }, 100);
         //window.location.assign('./bankHomePage.html');
         return false;
     }

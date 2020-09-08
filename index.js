@@ -159,7 +159,7 @@ async function generate(bank_name1, pass, reg) {
             if(receipt.status == true ) {
                 console.log('Transaction Success')
                 alert(bank_name1 + " successfully registered to the network. \nLogin from the \"Login\" Tab on the top-right side of the webpage.");
-                setTimeout(function () { window.location.reload(1); }, 500);
+                setTimeout(function () { window.location.reload(1); }, 100);
                 encryptPrivateKey(dataAcc.privateKey,dataAcc.address,pass);
                 return false;
                 //alert('Transaction Success')
@@ -167,14 +167,14 @@ async function generate(bank_name1, pass, reg) {
             else if(receipt.status == false) {
                 console.log('Transaction Failed')
                 alert(bank_name1 + " hasn't been successfully registered to the network. \nPlease try again.");
-                setTimeout(function () { window.location.reload(1); }, 500);
+                setTimeout(function () { window.location.reload(1); }, 100);
                 return false;
             }
         })
         .catch( err => {
             console.log('Error', err)
             alert(bank_name1 + " hasn't been successfully registered to the network. \nPlease try again.");
-            setTimeout(function () { window.location.reload(1); }, 500);
+            setTimeout(function () { window.location.reload(1); }, 100);
             return false;
         })
         .finally(() => {
@@ -246,31 +246,32 @@ async function connection(bank_name_l, pass_l) {
     try {
         let decryptData=web3.eth.accounts.decrypt(objKeyStore, pass_l)
         let privateKey=decryptData.privateKey.substring(2);
+        window.localStorage.setItem("bank_name_l",bank_name_l);
+        window.localStorage.setItem("bankPrivKey",privateKey);
+        let hexKey="0x"+privateKey;
+        let acc= web3.eth.accounts.privateKeyToAccount(hexKey);
+        let current_account= acc.address;
+        window.localStorage.setItem("bankAddress",current_account);
+
+        /*if (contractInstance.checkBank.call(bank_name_l, current_account, {
+                from: ,
+                gas: 4700000
+            }) == true) */ 
+        let checkBank = await contractInstance.methods.checkBank(bank_name_l, current_account, pass_l).call(); 
+        if (checkBank == 3) {
+            alert("Welcome " + bank_name_l);
+            window.location.assign('./resources/bankHomePage.html');
+            return false;
+            //localStorage.bank_eth_account = pass_l;
+        } else { 
+            alert("Invalid bank name, password or keystore. \nThe bank hasn't been registered yet. \nSign up before proceeding further.");
+            setTimeout(function () { window.location.reload(1); }, 100);
+            return false;
+        }
     } catch (err) {
         alert("Invalid keystore or password")
-    }
-    window.localStorage.setItem("bank_name_l",bank_name_l);
-    window.localStorage.setItem("bankPrivKey",privateKey);
-    let hexKey="0x"+privateKey;
-    let acc= web3.eth.accounts.privateKeyToAccount(hexKey);
-    let current_account= acc.address;
-    window.localStorage.setItem("bankAddress",current_account);
-
-    /*if (contractInstance.checkBank.call(bank_name_l, current_account, {
-            from: ,
-            gas: 4700000
-        }) == true) */ 
-    let checkBank = await contractInstance.methods.checkBank(bank_name_l, current_account, pass_l).call(); 
-    if (checkBank == 3) {
-        alert("Welcome " + bank_name_l);
-        window.location.assign('./resources/bankHomePage.html');
-        return false;
-        //localStorage.bank_eth_account = pass_l;
-    } else { 
-        alert("Invalid bank name, password or keystore. \nThe bank hasn't been registered yet. \nSign up before proceeding further.");
-        setTimeout(function () { window.location.reload(1); }, 500);
-        return false;
-    }
+        //window.location.reload(1);
+    }   
 }
 
 function readFile(input) {
