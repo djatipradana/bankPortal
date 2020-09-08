@@ -226,7 +226,9 @@ async function increaseRating() {
             })
             .catch( err => {
                 console.log('Error', err)
-                //alert('Transaction Failed')
+                alert("Customer rating hasn't been successfully upgraded.");
+                setTimeout(function () { window.location.reload(1); }, 500);
+                return false;
             })
             .finally(() => {
                 console.log('Extra Code After Everything')
@@ -308,7 +310,9 @@ async function decreaseRating() {
             })
             .catch( err => {
                 console.log('Error', err)
-                //alert('Transaction Failed')
+                alert("Customer rating hasn't been successfully downgraded.");
+                setTimeout(function () { window.location.reload(1); }, 500);
+                return false;
             })
             .finally(() => {
                 console.log('Extra Code After Everything')

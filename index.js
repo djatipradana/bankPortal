@@ -173,7 +173,9 @@ async function generate(bank_name1, pass, reg) {
         })
         .catch( err => {
             console.log('Error', err)
-            //alert('Transaction Failed')
+            alert(bank_name1 + " hasn't been successfully registered to the network. \nPlease try again.");
+            setTimeout(function () { window.location.reload(1); }, 500);
+            return false;
         })
         .finally(() => {
             console.log('Extra Code After Everything')
@@ -241,9 +243,12 @@ function onLogin() {
 async function connection(bank_name_l, pass_l) {
     let objKeyStore = JSON.parse(keyStoreEnc);
     //let decpassword=document.getElementById('pass_l').value;
-    let decryptData=web3.eth.accounts.decrypt(objKeyStore, pass_l)
-    let privateKey=decryptData.privateKey.substring(2);
-
+    try {
+        let decryptData=web3.eth.accounts.decrypt(objKeyStore, pass_l)
+        let privateKey=decryptData.privateKey.substring(2);
+    } catch (err) {
+        alert("Invalid keystore or password")
+    }
     window.localStorage.setItem("bank_name_l",bank_name_l);
     window.localStorage.setItem("bankPrivKey",privateKey);
     let hexKey="0x"+privateKey;

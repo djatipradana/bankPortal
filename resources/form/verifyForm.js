@@ -254,7 +254,8 @@ async function onClickAccept() {
         })
         .catch( err => {
             console.log('Error', err)
-            //alert('Transaction Failed')
+            alert("Customer profile hasn't been successfully verified.");
+            return false;
         })
         .finally(() => {
             console.log('Extra Code After Everything')
@@ -332,7 +333,8 @@ async function onClickReject() {
         })
         .catch( err => {
             console.log('Error', err)
-            //alert('Transaction Failed')
+            alert("Customer profile hasn't been successfully rejected.");
+            return false;
         })
         .finally(() => {
             console.log('Extra Code After Everything')
