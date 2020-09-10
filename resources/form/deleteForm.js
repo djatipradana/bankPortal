@@ -18,14 +18,13 @@ var current_bankPriveKey;
 var current_bankAddress;
 var current_bank_name_l;
 var current_user_name_d;
+var current_usernameBank;
 //var count = 0;
 
 var starsTotal = 5;
 
 var element = [
-    "first_name",
-    "middle_name",
-    "last_name",
+    "name",
     "nik",
     "occupation",
     "income",
@@ -34,8 +33,7 @@ var element = [
     "residence",
     "country",
     "phone1",
-    "phone2",
-    "email"
+    "phone2"
 ];
 
 //var current_account = localStorage.bank_eth_account;
@@ -46,6 +44,8 @@ window.onload = function() {
     current_bankAddress = localStorage.getItem("bankAddress");
     current_bank_name_l = localStorage.getItem("bank_name_l");
     current_user_name_d = localStorage.getItem("user_name_d");
+    current_usernameBank = current_user_name_d + "!@#" + current_bank_name_l;
+    
 
     fillForm();
 }
@@ -117,7 +117,7 @@ function sendSign(myData,gasLimit){
 
 
 async function fillForm() {
-    let viewCust = await contractInstance.methods.viewCustomer(current_user_name_d).call();
+    let viewCust = await contractInstance.methods.viewCustomer(current_usernameBank).call();
     //let viewBankRating = await contractInstance.methods.getBankRating(current_bank_name_l).call();
     
     document.getElementById("kyc_status").innerHTML = viewCust[5];
@@ -133,7 +133,8 @@ async function fillForm() {
     document.querySelector(".customer_rating").innerHTML = toStar;
 
     document.getElementById("customer_address").innerHTML = viewCust[0];
-    document.getElementById("username").innerHTML = viewCust[1];
+    document.getElementById("email").innerHTML = viewCust[1];
+    document.getElementById("username").innerHTML = viewCust[6];
     //document.getElementById("bank_name").innerHTML = viewCust[3];
     
     var dataProfile = viewCust[2];
@@ -175,7 +176,7 @@ async function onClickDelete() {
     if (confirm("Are you sure to delete the KYC profile of " + current_user_name_d + " ?") == true) {
         /*let accDelete = await contractInstance.methods.removeAccountCust(current_user_name_d).encodeABI();
         sendSign(accDelete,100000); */
-        let custDelete = await contractInstance.methods.removeCust(current_user_name_d, current_bank_name_l, filling).encodeABI();
+        let custDelete = await contractInstance.methods.removeCust(current_usernameBank, current_bank_name_l, filling).encodeABI();
         sendSign(custDelete,200000);
         
         /*if (count == 2) {

@@ -19,13 +19,12 @@ var current_privkey;
 var current_address;
 var current_username;
 var current_bankName;
+var current_usernameBank;
 
 var starsTotal = 5;
 
 var element = [
-    "first_name",
-    "middle_name",
-    "last_name",
+    "name",
     "nik",
     "occupation",
     "income",
@@ -34,8 +33,7 @@ var element = [
     "residence",
     "country",
     "phone1",
-    "phone2",
-    "email"
+    "phone2"
 ];
 
 
@@ -44,24 +42,19 @@ window.onload = function() {
     current_address = localStorage.getItem("accountAddress");
     current_username = localStorage.getItem("username");
     current_bankName = localStorage.getItem("bankName");
+    current_usernameBank = current_username + "!@#" + current_bankName;
 
     fillForm();
 }
 
-/*var current_account = web3.eth.accounts[0];
-var user_name = localStorage.username_c; */
 
 //  function to fill customer data in form
 
 async function fillForm() {
     try {
-        let viewCust = await contractInstance.methods.viewCustomer(current_username).call();
+        let viewCust = await contractInstance.methods.viewCustomer(current_usernameBank).call();
         let viewBankRating = await contractInstance.methods.getBankRating(viewCust[3]).call();
-    
-        /*
-        let viewCust2 = await contractInstance.methods.viewCustomer2(current_username).call();
-        let viewCust3 = await contractInstance.methods.viewCustomer3(current_username).call();
-        */
+        
         document.getElementById("kyc_status").innerHTML = viewCust[5];
 
         const toStar = parseFloat(viewCust[4])/100;
@@ -75,7 +68,8 @@ async function fillForm() {
         document.querySelector(".customer_rating").innerHTML = toStar;
 
         document.getElementById("customer_address").innerHTML = viewCust[0];
-        document.getElementById("username").innerHTML = viewCust[1];
+        document.getElementById("email").innerHTML = viewCust[1];
+        document.getElementById("username").innerHTML = viewCust[6];
         document.getElementById("bank_name").innerHTML = viewCust[3];
 
         const toStarBank = parseFloat(viewBankRating)/100;
@@ -110,6 +104,7 @@ async function fillForm() {
     } catch (err) {
         console.log("Customer data doesn't exist", err.name + ": " + err.message);
     }
+    
 }
 
 

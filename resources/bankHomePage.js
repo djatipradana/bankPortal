@@ -124,7 +124,8 @@ async function fillDetails() {
 
 async function clickVerifyKYC() {
     let user_name_v = document.getElementById("user_name_v").value;
-    let getCustForVerify = await contractInstance.methods.getCustForVerify(user_name_v, current_bank_name_l).call();
+    let usernameBankVerify = user_name_v + "!@#" + current_bank_name_l;
+    let getCustForVerify = await contractInstance.methods.getCustForVerify(usernameBankVerify, current_bank_name_l).call();
     console.log(getCustForVerify)
     if (getCustForVerify == 3) {
         localStorage.setItem("user_name_v",user_name_v);
@@ -144,7 +145,8 @@ async function clickVerifyKYC() {
 
 async function clickDeleteKYC() {
     let user_name_d = document.getElementById("user_name_d").value;
-    let getCustForDelete = await contractInstance.methods.getCustForDelete(user_name_d, current_bank_name_l).call();
+    let usernameBankDelete = user_name_d + "!@#" + current_bank_name_l;
+    let getCustForDelete = await contractInstance.methods.getCustForDelete(usernameBankDelete, current_bank_name_l).call();
     console.log(getCustForDelete)
     if (getCustForDelete == 3) {
         localStorage.setItem("user_name_d",user_name_d);
@@ -163,8 +165,10 @@ async function clickDeleteKYC() {
 
 async function increaseRating() {
     let user_name_mr = document.getElementById("user_name_mr").value;
+    let usernameBankIncrease = user_name_mr + "!@#" + current_bank_name_l;
+    
     //let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
-    let checkCustName = await contractInstance.methods.getCustForDelete(user_name_mr, current_bank_name_l).call();
+    let checkCustName = await contractInstance.methods.getCustForDelete(usernameBankIncrease, current_bank_name_l).call();
     console.log(checkCustName)
     if (checkCustName == 3) {
         /*let increaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, true).send({
@@ -247,8 +251,10 @@ async function increaseRating() {
 
 async function decreaseRating() {
     let user_name_mr = document.getElementById("user_name_mr").value;
+    let usernameBankDecrease = user_name_mr + "!@#" + current_bank_name_l;
+    
     //let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
-    let checkCustName = await contractInstance.methods.getCustForDelete(user_name_mr, current_bank_name_l).call();
+    let checkCustName = await contractInstance.methods.getCustForDelete(usernameBankDecrease, current_bank_name_l).call();
     console.log(checkCustName)
     if (checkCustName == 3) {
         /*let decreaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, false).send({

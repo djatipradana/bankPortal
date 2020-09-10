@@ -19,13 +19,12 @@ var current_bankPriveKey;
 var current_bankAddress;
 var current_bank_name_l;
 var current_user_name_v;
+var current_usernameBank;
 
 var starsTotal = 5;
 
 var element = [
-    "first_name",
-    "middle_name",
-    "last_name",
+    "name",
     "nik",
     "occupation",
     "income",
@@ -34,19 +33,18 @@ var element = [
     "residence",
     "country",
     "phone1",
-    "phone2",
-    "email"
+    "phone2"
 ];
 
 
-//var current_account = localStorage.bank_eth_account;
-//var user_name = localStorage.user_name_v;
 
 window.onload = function() { 
     current_bankPriveKey = localStorage.getItem("bankPrivKey");
     current_bankAddress = localStorage.getItem("bankAddress");
     current_bank_name_l = localStorage.getItem("bank_name_l");
     current_user_name_v = localStorage.getItem("user_name_v");
+    current_usernameBank = current_user_name_v + "!@#" + current_bank_name_l;
+    
 
     fillForm();
 }
@@ -112,7 +110,7 @@ function sendSign(myData,gasLimit){
 //  function to fill customer data in form
 
 async function fillForm() {
-    let viewCust = await contractInstance.methods.viewCustomer(current_user_name_v).call();
+    let viewCust = await contractInstance.methods.viewCustomer(current_usernameBank).call();
     //let viewBankRating = await contractInstance.methods.getBankRating(current_bank_name_l).call();
     
     document.getElementById("kyc_status").innerHTML = viewCust[5];
@@ -128,7 +126,8 @@ async function fillForm() {
     document.querySelector(".customer_rating").innerHTML = toStar;
 
     document.getElementById("customer_address").innerHTML = viewCust[0];
-    document.getElementById("username").innerHTML = viewCust[1];
+    document.getElementById("email").innerHTML = viewCust[1];
+    document.getElementById("username").innerHTML = viewCust[6];
     //document.getElementById("bank_name").innerHTML = viewCust[3];
     
     var dataProfile = viewCust[2];
@@ -149,46 +148,6 @@ async function fillForm() {
             }
         }
     }
-
-    /*
-    var oldData = contractInstance.viewCustomer.call(user_name, {
-        from: current_account,
-        gas: 4700000
-    });
-    document.getElementById("customer_rating").innerHTML = contractInstance.getCustomerRating.call(user_name, {
-        from: current_account,
-        gas: 4700000
-    }) / 100;
-    var toFill = "";
-    for (var i = 0, j = 0; i < (oldData.length - 2); ++i) {
-        if (oldData[i] == '!' && oldData[i + 1] == '@' && oldData[i + 2] == '#') {
-            if (j == 7) {
-                document.getElementById("gender_m").innerHTML = toFill;
-                j += 2;
-                i += 2;
-                toFill = "";
-                continue;
-            }
-            if (toFill == "")
-                toFill = "Null";
-            document.getElementById(allIds[j]).innerHTML = toFill;
-            toFill = "";
-            j++;
-            i += 2;
-            continue;
-        }
-        toFill = toFill + oldData[i];
-    }
-
-    document.getElementById("bank_name").innerHTML = contractInstance.getCustomerBankName.call(user_name, {
-        from: current_account,
-        gas: 4700000
-    });
-    document.getElementById("bank_rating").innerHTML = (contractInstance.getCustomerBankRating.call(user_name, {
-        from: current_account,
-        gas: 4700000
-    })) / 100;
-    */
 }
 
 //  fill the KYC form
@@ -196,12 +155,12 @@ async function fillForm() {
 
 
 async function onClickAccept() {
-    /*let verified = await contractInstance.methods.setCustVerified(current_user_name_v).send({
+    /*let verified = await contractInstance.methods.setCustVerified(current_usernameBank).send({
         from: current_bankAddress,
         gas: 4700000
     }); */
 
-    let verified = await contractInstance.methods.setCustVerified(current_user_name_v).encodeABI();
+    let verified = await contractInstance.methods.setCustVerified(current_usernameBank).encodeABI();
     //sendSign(verified,20000);
 
     web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
@@ -275,12 +234,12 @@ async function onClickAccept() {
 
 
 async function onClickReject() {
-    /*let rejected = await contractInstance.methods.setCustRejected(current_user_name_v).send({
+    /*let rejected = await contractInstance.methods.setCustRejected(current_usernameBank).send({
         from: current_bankAddress,
         gas: 4700000
     }); */
 
-    let rejected = await contractInstance.methods.setCustRejected(current_user_name_v).encodeABI();
+    let rejected = await contractInstance.methods.setCustRejected(current_usernameBank).encodeABI();
     //sendSign(rejected,20000);
 
     web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {

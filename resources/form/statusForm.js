@@ -46,15 +46,18 @@ async function table() {
         //userReq.push(...filling);
         //userReq = [...filling];
         for (let i = 0; i < filling.length; i++) {
-            let getCustStatus = await contractInstance.methods.getCustStatus(filling[i]).call();
+            var current_usernameBank = filling[i] + "!@#" + current_bank_name_l;
+            let getCustStatus = await contractInstance.methods.viewCustomer(current_usernameBank).call();
             var table = document.getElementById("table_status");
             var rowCount = table.rows.length;
             var row = table.insertRow(rowCount);
             //var row = table.insertRow(0);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
-            cell1.innerHTML = filling[i];
-            cell2.innerHTML = getCustStatus;   
+            var cell3 = row.insertCell(2);
+            cell1.innerHTML = getCustStatus[0];
+            cell2.innerHTML = filling[i];
+            cell3.innerHTML = getCustStatus[5];
         }
     }
 }
