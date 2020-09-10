@@ -158,9 +158,9 @@ async function generate(bank_name1, pass, reg) {
                 
             if(receipt.status == true ) {
                 console.log('Transaction Success')
+                encryptPrivateKey(dataAcc.privateKey,dataAcc.address,pass);
                 alert(bank_name1 + " successfully registered to the network. \nLogin from the \"Login\" Tab on the top-right side of the webpage.");
                 setTimeout(function () { window.location.reload(1); }, 100);
-                encryptPrivateKey(dataAcc.privateKey,dataAcc.address,pass);
                 return false;
                 //alert('Transaction Success')
             }
