@@ -176,7 +176,7 @@ async function increaseRating() {
             gas: 4700000
         }); */
 
-        let increaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, true).encodeABI();
+        let increaseRatingCust = await contractInstance.methods.updateRatingCustomer(usernameBankIncrease, true).encodeABI();
         //sendSign(increaseRatingCust,100000);
         
         web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
@@ -262,7 +262,7 @@ async function decreaseRating() {
             gas: 4700000
         }); */
 
-        let decreaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, false).encodeABI();
+        let decreaseRatingCust = await contractInstance.methods.updateRatingCustomer(usernameBankDecrease, false).encodeABI();
         //sendSign(decreaseRatingCust,200000);
 
         web3.eth.getTransactionCount(ownerAccountAddress, (err, txCount) => {
