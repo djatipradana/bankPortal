@@ -168,7 +168,7 @@ async function increaseRating() {
     let usernameBankIncrease = user_name_mr + "!@#" + current_bank_name_l;
     
     //let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
-    let checkCustName = await contractInstance.methods.getCustForDelete(usernameBankIncrease, current_bank_name_l).call();
+    let checkCustName = await contractInstance.methods.getCustForDelete(usernameBankIncrease, user_name_mr, current_bank_name_l).call();
     console.log(checkCustName)
     if (checkCustName == 3) {
         /*let increaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, true).send({
@@ -254,7 +254,7 @@ async function decreaseRating() {
     let usernameBankDecrease = user_name_mr + "!@#" + current_bank_name_l;
     
     //let checkCustName = await contractInstance.methods.checkCustName(user_name_mr).call();
-    let checkCustName = await contractInstance.methods.getCustForDelete(usernameBankDecrease, current_bank_name_l).call();
+    let checkCustName = await contractInstance.methods.getCustForDelete(usernameBankDecrease, user_name_mr, current_bank_name_l).call();
     console.log(checkCustName)
     if (checkCustName == 3) {
         /*let decreaseRatingCust = await contractInstance.methods.updateRatingCustomer(user_name_mr, false).send({
