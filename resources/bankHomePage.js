@@ -125,7 +125,7 @@ async function fillDetails() {
 async function clickVerifyKYC() {
     let user_name_v = document.getElementById("user_name_v").value;
     let usernameBankVerify = user_name_v + "!@#" + current_bank_name_l;
-    let getCustForVerify = await contractInstance.methods.getCustForVerify(usernameBankVerify, current_bank_name_l).call();
+    let getCustForVerify = await contractInstance.methods.getCustForVerify(usernameBankVerify, user_name_v, current_bank_name_l).call();
     console.log(getCustForVerify)
     if (getCustForVerify == 3) {
         localStorage.setItem("user_name_v",user_name_v);
@@ -146,7 +146,7 @@ async function clickVerifyKYC() {
 async function clickDeleteKYC() {
     let user_name_d = document.getElementById("user_name_d").value;
     let usernameBankDelete = user_name_d + "!@#" + current_bank_name_l;
-    let getCustForDelete = await contractInstance.methods.getCustForDelete(usernameBankDelete, current_bank_name_l).call();
+    let getCustForDelete = await contractInstance.methods.getCustForDelete(usernameBankDelete, user_name_d, current_bank_name_l).call();
     console.log(getCustForDelete)
     if (getCustForDelete == 3) {
         localStorage.setItem("user_name_d",user_name_d);
