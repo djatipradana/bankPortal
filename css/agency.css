@@ -553,7 +553,7 @@ span.stars span {
   margin: 10px 0;
   width: 50%;
   border-radius: 5px 5px 0 0;
-  overflow: hidden;
+  overflow: auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -562,13 +562,15 @@ span.stars span {
   padding: 12px 15px;
 }
 
+/*
 .status tr.active-row {
   font-weight: bold; 
   color: #009879;
 }
+*/
 
 .status tr:last-of-type {
-  border-bottom: 2px solid #2487FF;
+  border-bottom: 2px solid /*#2487FF;*/ #080808;
 }
 
 .status tr:nth-child(even){background-color: #ffff;}
@@ -578,13 +580,14 @@ span.stars span {
 .status th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
-  background-color: #2487FF;
-  color: white;
+  text-align: center;
+  background-color: /*#2487FF;*/ #080808;
+  color: /*white;*/ #fed136;
   font-weight: bold;
   font-size: 15.5px;
 }
 
+/*
 .content-table {
   border-collapse: collapse;
   margin: 25px 0;
@@ -623,3 +626,4 @@ span.stars span {
   font-weight: bold;
   color: #009879;
 }
+*/
