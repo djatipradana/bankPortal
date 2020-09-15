@@ -570,7 +570,7 @@ span.stars span {
 */
 
 .status tr:last-of-type {
-  border-bottom: 2px solid /*#2487FF;*/ #080808;
+  border-bottom: 2px solid /*#2487FF;*/ #2222;
 }
 
 .status tr:nth-child(even){background-color: #ffff;}
@@ -581,7 +581,7 @@ span.stars span {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: /*#2487FF;*/ #080808;
+  background-color: /*#2487FF;*/ #2222;
   color: /*white;*/ #fed136;
   font-weight: bold;
   font-size: 15.5px;
