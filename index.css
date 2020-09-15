@@ -255,13 +255,14 @@ header .intro-text .intro-lead-out {
 }
 
 header .intro-text .intro-heading {
-  font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+  /*font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;*/
+  font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   color: #fed136;
   font-weight: 700;
-  font-size: 50px;
-  line-height: 50px;
-  margin-bottom: 25px;
+  font-size: 75px;
+  line-height: 75px;
+  margin-bottom: 50px;
 }
 
 /*first section heading styles for 768px screens*/
