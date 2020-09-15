@@ -153,7 +153,8 @@ fieldset[disabled] .btn-xl.active {
 .navbar-custom .navbar-brand {
   color: #fed136;
   /*font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;*/
-  font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: italic;
 }
 .navbar-custom .navbar-brand:hover,
 .navbar-custom .navbar-brand:focus,
@@ -277,7 +278,8 @@ header .intro-text .intro-heading {
   }
   header .intro-text .intro-heading {
     /*font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;*/
-    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-style: italic;
     text-transform: none;
     color: #fed136;
     font-weight: 700;
